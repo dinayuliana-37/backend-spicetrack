@@ -4,14 +4,19 @@ require("./database");
 const authRoutes = require("./routes/auth");
 const profileRoutes = require("./routes/profile");
 const articleRoutes = require("./routes/articles");
+const classificationRoutes = require("./routes/classification");
 
 const app = express();
 
 // Routes
+app.use(express.urlencoded({
+  extended: true
+}));
 app.use(express.json());
 app.use("/auth", authRoutes);
 app.use("/profile", profileRoutes);
 app.use("/articles", articleRoutes);
+app.use("/classification", classificationRoutes);
 
 // Server
 const PORT = process.env.PORT || 8080;
