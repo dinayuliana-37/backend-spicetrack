@@ -3,6 +3,7 @@ exports.inference = async (image) => {
       const handler = tf.io.fileSystem("./resources/web_model/model.json");
       const model = await tf.loadGraphModel(handler);
       const prediction = model.predict(image);
+      console.log(prediction.dataSync());
       const probabilities = prediction.dataSync(); 
       const maxProbability = Math.max(...probabilities); 
       if (maxProbability < 0.2) 
