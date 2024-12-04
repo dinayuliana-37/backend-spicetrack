@@ -1,9 +1,24 @@
 const express = require("express");
 const mysql = require("mysql2");
 const app = express();
+const authRoutes = require("./routes/auth");
+const profileRoutes = require("./routes/profile");
+const articleRoutes = require("./routes/articles");
+const classificationRoutes = require("./routes/classification");
+require("./database");
 
 // Middleware untuk mem-parsing JSON dalam request body
 app.use(express.json());
+
+app.use(express.urlencoded({
+  extended: true
+}));
+
+// Routes
+app.use("/auth", authRoutes);
+app.use("/profile", profileRoutes);
+app.use("/articles", articleRoutes);
+app.use("/classification", classificationRoutes);
 
 // Konfigurasi koneksi ke Cloud SQL
 const db = mysql.createPool({
