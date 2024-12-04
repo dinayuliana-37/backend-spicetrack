@@ -12,15 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Pino from 'pino';
-import PinoHttp from 'pino-http';
+const Pino = require('pino');
+const PinoHttp = require('pino-http');
+// import Pino from 'pino';
+// import PinoHttp from 'pino-http';
 
 /**
  * Set project Id for log correlation in request-based logger
  * @param {string} projectId - Google Cloud Platform Project Id
  */
 let project;
-export const initLogCorrelation = (projectId) => {
+const initLogCorrelation = (projectId) => {
   project = projectId;
 };
 
@@ -40,7 +42,7 @@ const formatters = {
 /**
  * Initialize pino logger
  */
-export const logger = Pino({
+const logger = Pino({
   formatters,
   // Set log message property name to "message" for automatic parsing
   messageKey: 'message',
@@ -50,7 +52,7 @@ export const logger = Pino({
  * Create request-based logger with trace ID field for logging correlation
  * For more info, see https://cloud.google.com/run/docs/logging#correlate-logs
  */
-export const pinoHttp = PinoHttp({
+const pinoHttp = PinoHttp({
   logger,
   reqCustomProps: function (req) {
     const traceHeader = req.header('X-Cloud-Trace-Context');
@@ -64,3 +66,5 @@ export const pinoHttp = PinoHttp({
     };
   },
 });
+
+module.exports = { pinoHttp, logger, formatters, initLogCorrelation };
