@@ -1,37 +1,24 @@
-const mysql = require("mysql2");
+const mysql = require('mysql2');
 
-// Konfigurasi koneksi MySQL
-const connection = mysql.createConnection({
-  host: "localhost", // Host database
-  user: "root", // Username default untuk XAMPP
-  password: "", // Kosongkan jika tanpa password
-  database: "db_my_spice_app", // Nama database Anda
+// Konfigurasi koneksi ke database
+const db = mysql.createPool({
+  host: process.env.DB_HOST, // Alamat host (IP Cloud SQL)
+  user: process.env.DB_USER, // Username database
+  password: process.env.DB_PASSWORD, // Password database
+  database: process.env.DB_NAME, // Nama database
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 });
 
-// Menghubungkan ke database
-connection.connect((err) => {
-  if (err) {
-    console.error("Error connecting to database:", err);
-    return;
-  }
-  console.log("Connected to the MySQL database.");
-});
+// Fungsi eksekusi query MySQL
+const executeQuery = (query, values) => {
+  return new Promise((resolve, reject) => {
+    db.query(query, values, (err, results) => {
+      if (err) return reject(err);
+      resolve(results);
+    });
+  });
+};
 
-// Contoh query untuk membaca data dari tabel 'barang'
-connection.query("SELECT * FROM users", (err, result) => {
-  if (err) {
-    console.log(err);
-    return;
-  }
-
-  console.log(
-    "result: ",
-    result.map((users) => {
-      console.log(users);
-      return users;
-    })
-  );
-});
-
-// Ekspor koneksi agar dapat digunakan di file lain
-module.exports = connection;
+module.exports = { db, executeQuery };
