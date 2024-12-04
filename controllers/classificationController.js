@@ -4,8 +4,15 @@ require("dotenv").config()
 
   // Remove article from favorites
 const infer = async (req, res) => {
+  const image = req.file;
+  if (!image) {
+    return res.status(400).json({
+      status: false,
+      message: "Invalid input",
+    });
+  }
   try {
-    const preprocessedImage = await preprocessImage(req.file.buffer);
+    const preprocessedImage = await preprocessImage(image.buffer);
     const [index, label] = await inference(preprocessedImage);
     res.json(
       { 
