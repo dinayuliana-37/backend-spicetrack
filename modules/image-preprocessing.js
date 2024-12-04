@@ -1,5 +1,4 @@
 const tf = require('@tensorflow/tfjs-node');
-const sharp = require('sharp');
 
 // Preprocess the image 
 
