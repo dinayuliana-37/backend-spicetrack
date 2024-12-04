@@ -1,8 +1,8 @@
 const express = require('express');
-const { editProfile, logout } = require('../controllers/userController');
+const userController = require('../controllers/userController');
 const router = express.Router();
 
-router.post('/edit-profile', editProfile);
-router.post('/logout', logout);
+router.post('/edit-profile', userController.editProfile);
+router.post('/logout', userController.logout);
 
 module.exports = router;

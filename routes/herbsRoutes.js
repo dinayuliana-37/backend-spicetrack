@@ -1,9 +1,9 @@
 const express = require('express');
-const { getHerbs, getHerb, searchHerb } = require('../controllers/herbsController');
+const herbsController = require('../controllers/herbsController');
 const router = express.Router();
 
-router.get('/', getHerbs);
-router.get('/:id', getHerb);
-router.get('/search', searchHerb);
+router.get('/', herbsController.getHerbs);
+router.get('/:id', herbsController.getHerb);
+router.get('/search', herbsController.searchHerb);
 
 module.exports = router;

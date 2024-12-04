@@ -1,4 +1,5 @@
 const mysql = require('mysql2');
+require("dotenv").config()
 
 // Konfigurasi koneksi ke database
 const db = mysql.createPool({
