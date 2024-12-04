@@ -1,47 +1,37 @@
-const users = [
-  {
-    username: "testUser",
-    email: "testUser@example.com",
-    password: "securePassword123", // Tambahkan password di sini
-    updateProfile: updateProfile,
-  },
-];
+const { executeQuery } = require('./db');
 
-// Menyimulasikan pencarian pengguna berdasarkan username
-const findByUsername = (username) => {
-  return new Promise((resolve, reject) => {
-    const user = users.find((user) => user.username === username);
-    if (user) resolve(user);
-    else reject("User not found");
-  });
+const findUserByUsername = (username) => {
+  return executeQuery('SELECT * FROM Users WHERE username = ?', [username]);
 };
 
-// Menyimulasikan pembaruan profil pengguna
-function updateProfile(newProfileData) {
-  // Pastikan password tidak diperbarui sembarangan kecuali eksplisit
-  if (newProfileData.password) {
-    throw new Error(
-      "Password cannot be updated using updateProfile. Use a dedicated method."
-    );
+const createUser = (username, password) => {
+  return executeQuery(
+    'INSERT INTO Users (username, password, created_at, updated_at) VALUES (?, ?, NOW(), NOW())',
+    [username, password]
+  );
+};
+
+const findUserById = (id_user) => {
+  return executeQuery('SELECT * FROM Users WHERE id_user = ?', [id_user]);
+};
+
+const updateUserProfile = (id_user, username, password) => {
+  const fields = [];
+  const values = [];
+
+  if (username) {
+    fields.push('username = ?');
+    values.push(username);
+  }
+  if (password) {
+    fields.push('password = ?');
+    values.push(password);
   }
 
-  // Update profil (ini hanya simulasi, sesuaikan dengan database Anda)
-  Object.assign(this, newProfileData); // Menggunakan `this` untuk memperbarui data pengguna
-  return this; // Kembalikan pengguna yang sudah diperbarui
-}
+  values.push(id_user);
+  const query = `UPDATE Users SET ${fields.join(', ')}, updated_at = NOW() WHERE id_user = ?`;
 
-// Menyimulasikan pembaruan password pengguna
-function updatePassword(newPassword) {
-  if (!newPassword || newPassword.length < 8) {
-    throw new Error("Password must be at least 8 characters long.");
-  }
-  this.password = newPassword; // Perbarui password
-  return { message: "Password updated successfully" };
-}
+  return executeQuery(query, values);
+};
 
-// Tambahkan metode pembaruan password ke setiap pengguna
-users.forEach((user) => {
-  user.updatePassword = updatePassword;
-});
-
-module.exports = { findByUsername };
+module.exports = { findUserByUsername, createUser, findUserById, updateUserProfile };
