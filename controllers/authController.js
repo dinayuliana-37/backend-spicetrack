@@ -1,31 +1,43 @@
-const users = []; // In-memory user storage (for simplicity, replace with DB in production)
+const { findUserByUsername, createUser } = require('../models/userModel');
 
-// Register a new user
-exports.register = (req, res) => {
+const register = async (req, res) => {
   const { username, password } = req.body;
-  if (users.find((user) => user.username === username)) {
-    return res.status(400).json({ message: "User already exists" });
+
+  if (!username || !password) {
+    return res.status(400).json({ message: 'Username and password are required!' });
   }
-  const newUser = { username, password };
-  users.push(newUser);
-  res.status(201).json({ message: "User registered successfully" });
+
+  try {
+    const existingUser = await findUserByUsername(username);
+    if (existingUser.length > 0) {
+      return res.status(400).json({ message: 'Username already exists!' });
+    }
+
+    await createUser(username, password);
+    res.status(201).json({ message: 'User registered successfully!' });
+  } catch (err) {
+    res.status(500).json({ message: 'Error registering user', error: err.message });
+  }
 };
 
-// Login user
-exports.login = (req, res) => {
+const login = async (req, res) => {
   const { username, password } = req.body;
-  const user = users.find(
-    (user) => user.username === username && user.password === password
-  );
-  if (!user) {
-    return res.status(401).json({ message: "Invalid credentials" });
+
+  if (!username || !password) {
+    return res.status(400).json({ message: 'Username and password are required!' });
   }
-  // Add session or token logic here
-  res.json({ message: "User logged in successfully" });
+
+  try {
+    const user = await findUserByUsername(username);
+
+    if (user.length === 0 || user[0].password !== password) {
+      return res.status(401).json({ message: 'Invalid username or password!' });
+    }
+
+    res.json({ message: `Hello, ${username}. You are logged in.` });
+  } catch (err) {
+    res.status(500).json({ message: 'Error logging in', error: err.message });
+  }
 };
 
-// Logout user
-exports.logout = (req, res) => {
-  // Invalidate session or token logic here
-  res.json({ message: "User logged out successfully" });
-};
+module.exports = { register, login };
