@@ -2,7 +2,7 @@ const express = require("express");
 const classificationController = require("../controllers/classificationController");
 const router = express.Router();
 const multer = require('multer');
-const upload = multer();
+const upload = multer({ storage: multer.memoryStorage() });
 require("body-parser");
 
 router.post("/infer", upload.single('img'), classificationController.infer);
