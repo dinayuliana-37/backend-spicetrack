@@ -34,6 +34,21 @@ POST auth/register
     "message": "User registered successfully!"
 }
 ```
+## Login
+```bash
+POST auth/login
+```
+# Register account for user
+| Parameter         | Type    | Description |
+|-------------------|---------|-------------|
+| `username`        | varchar | Required.   |
+| `password`        | varchar | Required.   |
+## Response
+```bash
+{
+    "message": "Hello, doni77. Welcome to Spice Track!."
+}
+```
 
 
 
