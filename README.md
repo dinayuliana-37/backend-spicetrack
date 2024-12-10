@@ -1,7 +1,7 @@
 # SpiceTrack API
 ## API URL
-[SpiceTrack API]
-**http://localhost:8080/**
+# [SpiceTrack API]
+# **http://localhost:8080/**
 
 ## How to run this API on your local machine
 
@@ -21,14 +21,15 @@ If you want to run this API Server on your local machine, you need to do this st
 ## Auth Endpoints
 ## Register
 **POST auth/register**
-Register account for user
+# Register account for user
 | Parameter         | Type   | Description |
 |-------------------|--------|-------------|
 | `username`        | string | Required.   |
 | `password`        | string | Required.   |
 ## Response
-**{
+```bash
+{
     "message": "User registered successfully!"
-}**
+}
 
 
