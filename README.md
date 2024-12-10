@@ -20,16 +20,20 @@ If you want to run this API Server on your local machine, you need to do this st
 ## API Endpoints
 ## Auth Endpoints
 ## Register
-**POST auth/register**
+```bash
+POST auth/register
+```
 # Register account for user
-| Parameter         | Type   | Description |
-|-------------------|--------|-------------|
-| `username`        | string | Required.   |
-| `password`        | string | Required.   |
+| Parameter         | Type    | Description |
+|-------------------|---------|-------------|
+| `username`        | varchar | Required.   |
+| `password`        | varchar | Required.   |
 ## Response
 ```bash
 {
     "message": "User registered successfully!"
 }
+```
+
 
 
