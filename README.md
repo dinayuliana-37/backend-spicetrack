@@ -1,20 +1,26 @@
-# UlikBatik API
-
-UlikBatik API adalah backend server yang digunakan untuk mengelola data pengguna, postingan, batik, dan integrasi machine learning untuk analisis pola batik. API ini juga memiliki fitur integrasi dengan Matahari API untuk mencari produk batik.
-
+# SpiceTrack API
 ## API URL
-Server default berjalan di:  
 **http://localhost:8080/**
 
-## Cara Menjalankan API di Local Machine
+## How to run this API on your local machine
 
-Ikuti langkah-langkah berikut untuk menjalankan API di mesin lokal Anda:
+If you want to run this API Server on your local machine, you need to do this steps:
+
+- First, clone this repository.  git clone https://github.com/SpiceTrack/backend-spicetrack.git
+- Second, open terminal and go to this project's root directory.
+- Third, type npm ci in your terminal and hit enter button.
+- Fourth, start xampp.
+- fifth, create database name ulikbatik-dev.
+- sixth, type npx prisma generate in your terminal and hit enter button.
+- seventh, type npx prisma migrate dev in your terminal and hit enter button.
+- eighth, type npm run start-dev in your terminal and hit enter button.
+- Finally, the server will run on your http://localhost:8080
 
 1. Clone repository ini:  
    ```bash
-   git clone https://github.com/UlikBatik/cloud-computing-backend.git
-Buka terminal dan pindah ke root directory proyek.
-Instal dependensi:
+   git clone https://github.com/SpiceTrack/backend-spicetrack.git
+2. Buka terminal dan pindah ke root directory proyek.
+3. Instal dependensi:
 bash
 Salin kode
 npm ci
