@@ -1,7 +1,7 @@
 # SpiceTrack API
 ## API URL
 [SpiceTrack API]
-#**http://localhost:8080/**
+# **http://localhost:8080/**
 
 ## How to run this API on your local machine
 
